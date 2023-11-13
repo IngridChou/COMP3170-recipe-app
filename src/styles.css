@@ -1,0 +1,87 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  color: #151515;
+  background: pink;
+  min-height: 100vh;
+}
+
+.recipe {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  margin-right: 2.5rem;
+  padding: 1rem;
+  border-radius: 1em;
+  background-color: #aabbff;
+  border: 2px solid white;
+}
+
+.recipe button {
+  border-radius: 0.5em;
+  border: 2px solid white;
+  background-color: pink;
+}
+
+.recipe-details {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.recipe-details p {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.recipe-details p span:first-child {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.recipe-details p span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.recipe-details p input {
+  margin-left: 1rem;
+}
+/* End of recipe UI styles */
+
+/* Form styles */
+
+.edit form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit label {
+  display: block;
+  margin: 1rem 0;
+}
+
+.edit input {
+  height: 1.25rem;
+  border: 2.5px solid white;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.edit button {
+  height: 1.7rem;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border: 1px solid black;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+/* End of form styles */
