@@ -55,7 +55,7 @@ export default function Recipes() {
               />
             ))}
           </ul>
-          <button onClick={() => setEditingTask({})}>Add Task</button>
+          <button onClick={() => setEditingTask({})}>Add Recipe</button>
         </div>
       ) : (
         <RecipeForm
