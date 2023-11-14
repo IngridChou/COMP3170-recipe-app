@@ -25,7 +25,7 @@ export default function RecipeForm(props) {
         <label>
           <input
             type="text"
-            placeholder="Add new task..."
+            placeholder="Add new recipe..."
             onChange={handleTitleChange}
             value={title}
           />
