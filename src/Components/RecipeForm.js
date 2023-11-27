@@ -82,7 +82,7 @@ export default function RecipeForm() {
           </Select>
         </div>
         <div className="form-btns">
-          <Button className="cancel-btn" onClick={() => setEditing(null)}>
+          <Button variant='outline' colorScheme='red' onClick={() => setEditing(null)}>
             cancel
           </Button>
           <Button colorScheme='blue'>save</Button>
