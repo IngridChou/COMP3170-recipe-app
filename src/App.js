@@ -1,46 +1,77 @@
-import { useState } from "react";
-import "./styles.css";
+// App.js
 
+import { useState, useEffect } from "react";
+import "./styles.css";
 import Recipe from "./Components/Recipe";
 import RecipeForm from "./Components/RecipeForm";
-
-import { InventoryContext } from "./data/inventoryContext";
 import RecipeList from "./Components/RecipeList";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Heading, Button } from "@chakra-ui/react";
+import { InventoryContext } from "./data/inventoryContext";
 
-import { ChakraProvider } from '@chakra-ui/react'
-import { Heading, Text, Button } from '@chakra-ui/react'
+const API_KEY = "6f9cb552d1b843288f6ebeb76688a49d"; // Use the provided Spoonacular API key
 
 export default function App() {
-  const [products, setProducts] = useState(initialProducts);
+  const [recipes, setRecipes] = useState(() => {
+    const storedRecipes = localStorage.getItem("recipes");
+    return storedRecipes ? JSON.parse(storedRecipes) : [];
+  });
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(null);
 
-  function addProduct(product) {
-    setProducts([...products, product]);
+  async function fetchRecipeData() {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://api.spoonacular.com/recipes/random?apiKey=${API_KEY}&number=10&page=${page}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      const newRecipes = data.recipes.map((recipe) => ({
+        ...recipe,
+        id: recipe.id || String(Math.random()), // Fallback to random string if 'id' is missing
+      }));
+      setRecipes((prevRecipes) => [...prevRecipes, ...newRecipes]);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  }
 
-    // remove the form after creating product
+  useEffect(() => {
+    if (recipes.length === 0 || page > 1) {
+      fetchRecipeData();
+    }
+  }, [page, recipes]);
+
+  function addRecipe(recipe) {
+    const newRecipes = [...recipes, recipe];
+    setRecipes(newRecipes);
+    localStorage.setItem("recipes", JSON.stringify(newRecipes));
     setEditing(null);
   }
 
-  function updateProduct(product) {
-    setProducts(
-      products.map(function (p) {
-        if (p.id === product.id) {
-          return product;
-        } else {
-          return p;
-        }
-      })
+  function updateRecipe(updatedRecipe) {
+    const newRecipes = recipes.map((recipe) =>
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
     );
-    // remove the form after creating product
+    setRecipes(newRecipes);
+    localStorage.setItem("recipes", JSON.stringify(newRecipes));
     setEditing(null);
   }
 
-  function deleteProduct(id) {
-    setProducts(
-      products.filter(function (p) {
-        return p.id !== id;
-      })
-    );
+  function deleteRecipe(id) {
+    const newRecipes = recipes.filter((recipe) => recipe.id !== id);
+    setRecipes(newRecipes);
+    localStorage.setItem("recipes", JSON.stringify(newRecipes));
+  }
+
+  function loadMoreRecipes() {
+    setPage((prevPage) => prevPage + 1);
   }
 
   return (
@@ -48,15 +79,19 @@ export default function App() {
       <div className="App">
         <InventoryContext.Provider
           value={{
-            products,
-            addProduct,
-            deleteProduct,
-            updateProduct,
+            recipes: recipes.slice().sort((a, b) => {
+              const idA = String(a.id).toLowerCase();
+              const idB = String(b.id).toLowerCase();
+              return idA.localeCompare(idB);
+            }),
+            addRecipe,
+            deleteRecipe,
+            updateRecipe,
             setEditing,
-            editing
+            editing,
           }}
         >
-          <Heading m='10'>Recipes</Heading>
+          <Heading m="10">Recipes</Heading>
           {!editing ? (
             <>
               <Button
@@ -66,6 +101,13 @@ export default function App() {
                 Add New Recipe
               </Button>
               <RecipeList />
+              <Button
+                className="load-more-btn"
+                onClick={loadMoreRecipes}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Load More"}
+              </Button>
             </>
           ) : (
             <RecipeForm />
@@ -75,18 +117,3 @@ export default function App() {
     </ChakraProvider>
   );
 }
-
-const initialProducts = [
-  {
-    id: 1,
-    name: "Ham Sandwich",
-    // price: 4.56,
-    category: "Lunch",
-  },
-  {
-    id: 2,
-    name: "Chocolate Chip Cookies",
-    // price: 5.99,
-    category: "Dessert",
-  }
-];

@@ -1,91 +1,84 @@
 import { useContext, useState } from "react";
 import { nanoid } from "nanoid";
 import { InventoryContext } from "../data/inventoryContext";
-import { categories } from "../data/categories";
-import { Select, Textarea, Button } from '@chakra-ui/react'
-
-// Add recipe description text input (Textarea)
+import { Select, Button } from "@chakra-ui/react";
 
 export default function RecipeForm() {
   const {
-    addProduct,
+    addRecipe,
     setEditing,
-    updateProduct,
+    updateRecipe,
     editing,
-    products
+    recipes,
   } = useContext(InventoryContext);
 
-  // check if value of editing is "new" or some id of a product
   let initialData = {
-    name: "",
-    // price: 0,
-    category: "",
+    title: "",
+    dishType: "",
+    image: "",
   };
 
   if (editing !== "new") {
-    initialData = products.find(function (p) {
-      return p.id === editing;
-    });
+    initialData = recipes.find((recipe) => recipe.id === editing);
   }
 
-  const [product, setProduct] = useState(initialData);
+  const [recipe, setRecipe] = useState(initialData);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (editing === "new") {
-      addProduct({
-        ...product,
-        id: nanoid()
+      addRecipe({
+        ...recipe,
+        id: nanoid(),
       });
     } else {
-      updateProduct(product);
+      updateRecipe(recipe);
     }
   }
 
   function handleInput(e, field) {
-    setProduct({ ...product, [field]: e.target.value });
+    setRecipe({ ...recipe, [field]: e.target.value });
   }
+
   return (
     <div className="add-form">
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
+          <label>Title:</label>
           <input
             type="text"
-            value={product.name}
-            onChange={(e) => handleInput(e, "name")}
+            value={recipe.title}
+            onChange={(e) => handleInput(e, "title")}
           />
         </div>
-        {/* <div>
-          <label>Price:</label>
+        <div>
+          <label>Dish Type:</label>
           <input
             type="text"
-            value={product.price}
-            onChange={(e) => handleInput(e, "price")}
+            value={recipe.dishType}
+            onChange={(e) => handleInput(e, "dishType")}
           />
-        </div> */}
+        </div>
         <div>
-          <label>Category:</label>
-          <Select
-            defaultValue={product.category}
-            onChange={(e) => handleInput(e, "category")}
-            ml='7'
-            bg='tomato'
-            borderColor='tomato'
-            color='white'
-          >
-            <option value="">--select category--</option>
-            {categories.map((c) => (
-              <option value={c}>{c}</option>
-            ))}
-          </Select>
+          <label>Image URL:</label>
+          <input
+            type="text"
+            value={recipe.image}
+            onChange={(e) => handleInput(e, "image")}
+          />
         </div>
         <div className="form-btns">
-          <Button variant='outline' colorScheme='red' onClick={() => setEditing(null)}>
-            cancel
+          <Button
+            variant="outline"
+            colorScheme="red"
+            onClick={() => setEditing(null)}
+          >
+            Cancel
           </Button>
-          <Button colorScheme='blue'>save</Button>
+          <Button colorScheme="blue" type="submit">
+            Save
+          </Button>
         </div>
       </form>
     </div>

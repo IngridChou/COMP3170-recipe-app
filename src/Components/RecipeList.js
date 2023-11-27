@@ -1,19 +1,14 @@
 import { useContext, useState } from "react";
 import Recipe from "./Recipe";
 import { InventoryContext } from "../data/inventoryContext";
-import { categories } from "../data/categories";
-import { filter, sort } from "../utils/helpers";
-import { Select, Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import { Select } from "@chakra-ui/react";
 
 export default function RecipeList() {
-  const { products } = useContext(InventoryContext);
-
-  // local state for tracking filter and sorting selections
+  const { recipes } = useContext(InventoryContext);
   const [filterSelection, setFilterSelection] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
-  let displayedProducts = sort(products, sortOrder);
-  displayedProducts = filter(displayedProducts, filterSelection);
+  console.log("Recipes in RecipeList:", recipes); // Add this line
 
   return (
     <>
@@ -23,36 +18,31 @@ export default function RecipeList() {
           <Select
             defaultValue={filterSelection}
             onChange={(e) => setFilterSelection(e.target.value)}
-            bg='tomato'
-            borderColor='tomato'
-            color='white'
+            bg="tomato"
+            borderColor="tomato"
+            color="white"
           >
             <option value="">All</option>
-            {categories.map((c) => (
-              <option value={c}>{c}</option>
-            ))}
+            {/* Add other filter options based on your data */}
           </Select>
         </label>
-
         <label>
           Sort By:
           <Select
             defaultValue={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
-            bg='tomato'
-            borderColor='tomato'
-            color='white'
+            bg="tomato"
+            borderColor="tomato"
+            color="white"
           >
-            <option value="">All</option>
-            <option value="1">alphabetically</option>
-            {/* <option value="2">price</option> */}
+            <option value="">Default</option>
+            {/* Add other sorting options based on your data */}
           </Select>
         </label>
-
       </div>
       <div className="products">
-        {displayedProducts.map((p) => (
-          <Recipe product={p} />
+        {recipes.map((recipe) => (
+          <Recipe key={recipe.id} recipe={recipe} />
         ))}
       </div>
     </>
