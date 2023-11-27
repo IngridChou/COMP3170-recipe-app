@@ -39,7 +39,7 @@ export default function RecipeList() {
           >
             <option value="">All</option>
             <option value="1">alphabetically</option>
-            <option value="2">price</option>
+            {/* <option value="2">price</option> */}
           </select>
         </label>
 

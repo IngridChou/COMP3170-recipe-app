@@ -52,7 +52,7 @@ export default function App() {
           editing
         }}
       >
-        <h2>Inventory System</h2>
+        <h2>Recipes</h2>
         {!editing ? (
           <>
             <RecipeList />
@@ -74,16 +74,16 @@ export default function App() {
 const initialProducts = [
   {
     id: 1,
-    name: "Lettuce",
-    price: 4.56,
-    category: "produce",
+    name: "Ham Sandwich",
+    // price: 4.56,
+    category: "Lunch",
     inStock: false
   },
   {
     id: 2,
-    name: "milk",
-    price: 5.99,
-    category: "dairy",
+    name: "Chocolate Chip Cookies",
+    // price: 5.99,
+    category: "Dessert",
     inStock: true
   }
 ];

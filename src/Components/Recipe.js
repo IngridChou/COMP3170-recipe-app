@@ -17,9 +17,9 @@ export default function Recipe({ product }) {
   return (
     <div className="product">
       <h3>{product.name}</h3>
-      <p>
+      {/* <p>
         <span>Price:</span> {`$${product.price}`}
-      </p>
+      </p> */}
       <p>
         <span>Category:</span> {product.category}
       </p>

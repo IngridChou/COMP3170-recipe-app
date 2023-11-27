@@ -15,7 +15,7 @@ export default function RecipeForm() {
   // check if value of editing is "new" or some id of a product
   let initialData = {
     name: "",
-    price: 0,
+    // price: 0,
     category: "",
     inStock: false
   };
@@ -55,14 +55,14 @@ export default function RecipeForm() {
             onChange={(e) => handleInput(e, "name")}
           />
         </div>
-        <div>
+        {/* <div>
           <label>Price:</label>
           <input
             type="text"
             value={product.price}
             onChange={(e) => handleInput(e, "price")}
           />
-        </div>
+        </div> */}
         <div>
           <label>Category:</label>
           <select

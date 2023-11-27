@@ -23,9 +23,9 @@ export function sort(products, option) {
         return a.name.localeCompare(b.name);
       });
     }
-    case "2": {
-      return products.sort((a, b) => a.price - b.price);
-    }
+    // case "2": {
+    //   return products.sort((a, b) => a.price - b.price);
+    // }
     default: {
       return products;
     }
