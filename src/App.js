@@ -7,6 +7,9 @@ import RecipeForm from "./Components/RecipeForm";
 import { InventoryContext } from "./data/inventoryContext";
 import RecipeList from "./Components/RecipeList";
 
+import { ChakraProvider } from '@chakra-ui/react'
+import { Heading, Text, Button } from '@chakra-ui/react'
+
 export default function App() {
   const [products, setProducts] = useState(initialProducts);
   const [editing, setEditing] = useState(null);
@@ -41,33 +44,35 @@ export default function App() {
   }
 
   return (
-    <div className="App">
-      <InventoryContext.Provider
-        value={{
-          products,
-          addProduct,
-          deleteProduct,
-          updateProduct,
-          setEditing,
-          editing
-        }}
-      >
-        <h2>Recipes</h2>
-        {!editing ? (
-          <>
-            <RecipeList />
-            <button
-              className="save-btn add-btn"
-              onClick={() => setEditing("new")}
-            >
-              Add product
-            </button>
-          </>
-        ) : (
-          <RecipeForm />
-        )}
-      </InventoryContext.Provider>
-    </div>
+    <ChakraProvider>
+      <div className="App">
+        <InventoryContext.Provider
+          value={{
+            products,
+            addProduct,
+            deleteProduct,
+            updateProduct,
+            setEditing,
+            editing
+          }}
+        >
+          <Heading m='10'>Recipes</Heading>
+          {!editing ? (
+            <>
+              <Button
+                className="save-btn add-btn"
+                onClick={() => setEditing("new")}
+              >
+                Add New Recipe
+              </Button>
+              <RecipeList />
+            </>
+          ) : (
+            <RecipeForm />
+          )}
+        </InventoryContext.Provider>
+      </div>
+    </ChakraProvider>
   );
 }
 

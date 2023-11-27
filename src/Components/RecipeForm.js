@@ -2,6 +2,9 @@ import { useContext, useState } from "react";
 import { nanoid } from "nanoid";
 import { InventoryContext } from "../data/inventoryContext";
 import { categories } from "../data/categories";
+import { Select, Textarea, Button } from '@chakra-ui/react'
+
+// Add recipe description text input (Textarea)
 
 export default function RecipeForm() {
   const {
@@ -64,21 +67,25 @@ export default function RecipeForm() {
         </div> */}
         <div>
           <label>Category:</label>
-          <select
+          <Select
             defaultValue={product.category}
             onChange={(e) => handleInput(e, "category")}
+            ml='7'
+            bg='tomato'
+            borderColor='tomato'
+            color='white'
           >
             <option value="">--select category--</option>
             {categories.map((c) => (
               <option value={c}>{c}</option>
             ))}
-          </select>
+          </Select>
         </div>
         <div className="form-btns">
-          <button className="cancel-btn" onClick={() => setEditing(null)}>
+          <Button className="cancel-btn" onClick={() => setEditing(null)}>
             cancel
-          </button>
-          <button className="save-btn">save</button>
+          </Button>
+          <Button colorScheme='blue'>save</Button>
         </div>
       </form>
     </div>

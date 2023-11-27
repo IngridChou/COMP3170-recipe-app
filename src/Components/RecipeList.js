@@ -3,6 +3,7 @@ import Recipe from "./Recipe";
 import { InventoryContext } from "../data/inventoryContext";
 import { categories } from "../data/categories";
 import { filter, sort } from "../utils/helpers";
+import { Select, Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
 export default function RecipeList() {
   const { products } = useContext(InventoryContext);
@@ -19,27 +20,33 @@ export default function RecipeList() {
       <div className="filters">
         <label>
           Filters:
-          <select
+          <Select
             defaultValue={filterSelection}
             onChange={(e) => setFilterSelection(e.target.value)}
+            bg='tomato'
+            borderColor='tomato'
+            color='white'
           >
             <option value="">All</option>
             {categories.map((c) => (
               <option value={c}>{c}</option>
             ))}
-          </select>
+          </Select>
         </label>
 
         <label>
           Sort By:
-          <select
+          <Select
             defaultValue={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
+            bg='tomato'
+            borderColor='tomato'
+            color='white'
           >
             <option value="">All</option>
             <option value="1">alphabetically</option>
             {/* <option value="2">price</option> */}
-          </select>
+          </Select>
         </label>
 
       </div>
