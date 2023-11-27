@@ -10,10 +10,9 @@ export default function RecipeList() {
   // local state for tracking filter and sorting selections
   const [filterSelection, setFilterSelection] = useState("");
   const [sortOrder, setSortOrder] = useState("");
-  const [inStockFilter, setInStockFilter] = useState(false);
 
   let displayedProducts = sort(products, sortOrder);
-  displayedProducts = filter(displayedProducts, filterSelection, inStockFilter);
+  displayedProducts = filter(displayedProducts, filterSelection);
 
   return (
     <>
@@ -43,14 +42,6 @@ export default function RecipeList() {
           </select>
         </label>
 
-        <label>
-          In Stock:
-          <input
-            type="checkbox"
-            checked={inStockFilter}
-            onChange={() => setInStockFilter(!inStockFilter)}
-          />
-        </label>
       </div>
       <div className="products">
         {displayedProducts.map((p) => (

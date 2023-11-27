@@ -1,16 +1,7 @@
-export function filter(products, category, inStock = false) {
-  if (category !== "" && inStock) {
-    // there is a selection for category and inStock filter is checked
-    return products.filter((p) => p.category === category && p.inStock);
-  }
+export function filter(products, category) {
 
   if (category !== "") {
     return products.filter((p) => p.category === category);
-  }
-
-  if (inStock) {
-    //inStock === true
-    return products.filter((p) => p.inStock);
   }
 
   return products;

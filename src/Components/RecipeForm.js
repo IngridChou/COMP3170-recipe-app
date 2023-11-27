@@ -17,7 +17,6 @@ export default function RecipeForm() {
     name: "",
     // price: 0,
     category: "",
-    inStock: false
   };
 
   if (editing !== "new") {

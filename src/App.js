@@ -77,13 +77,11 @@ const initialProducts = [
     name: "Ham Sandwich",
     // price: 4.56,
     category: "Lunch",
-    inStock: false
   },
   {
     id: 2,
     name: "Chocolate Chip Cookies",
     // price: 5.99,
     category: "Dessert",
-    inStock: true
   }
 ];

@@ -7,13 +7,6 @@ export default function Recipe({ product }) {
     InventoryContext
   );
 
-  function handleCheckbox() {
-    updateProduct({
-      ...product,
-      inStock: !product.inStock
-    });
-  }
-
   return (
     <div className="product">
       <h3>{product.name}</h3>
@@ -23,14 +16,7 @@ export default function Recipe({ product }) {
       <p>
         <span>Category:</span> {product.category}
       </p>
-      <label>
-        {product.inStock ? "In Stock" : "Not in stock"}
-        <input
-          type="checkbox"
-          checked={product.inStock}
-          onChange={handleCheckbox}
-        />
-      </label>
+
       <button className="edit-btn" onClick={() => setEditing(product.id)}>
         edit
       </button>
