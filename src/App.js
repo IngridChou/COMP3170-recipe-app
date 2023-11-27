@@ -1,11 +1,89 @@
+import { useState } from "react";
 import "./styles.css";
-import Recipes from "./Components/Recipes";
+
+import Recipe from "./Components/Recipe";
+import RecipeForm from "./Components/RecipeForm";
+
+import { InventoryContext } from "./data/inventoryContext";
+import RecipeList from "./Components/RecipeList";
 
 export default function App() {
+  const [products, setProducts] = useState(initialProducts);
+  const [editing, setEditing] = useState(null);
+
+  function addProduct(product) {
+    setProducts([...products, product]);
+
+    // remove the form after creating product
+    setEditing(null);
+  }
+
+  function updateProduct(product) {
+    setProducts(
+      products.map(function (p) {
+        if (p.id === product.id) {
+          return product;
+        } else {
+          return p;
+        }
+      })
+    );
+    // remove the form after creating product
+    setEditing(null);
+  }
+
+  function deleteProduct(id) {
+    setProducts(
+      products.filter(function (p) {
+        return p.id !== id;
+      })
+    );
+  }
+
   return (
     <div className="App">
-      <h1>Recipe App</h1>
-      <Recipes />
+      <InventoryContext.Provider
+        value={{
+          products,
+          addProduct,
+          deleteProduct,
+          updateProduct,
+          setEditing,
+          editing
+        }}
+      >
+        <h2>Inventory System</h2>
+        {!editing ? (
+          <>
+            <RecipeList />
+            <button
+              className="save-btn add-btn"
+              onClick={() => setEditing("new")}
+            >
+              Add product
+            </button>
+          </>
+        ) : (
+          <RecipeForm />
+        )}
+      </InventoryContext.Provider>
     </div>
   );
 }
+
+const initialProducts = [
+  {
+    id: 1,
+    name: "Lettuce",
+    price: 4.56,
+    category: "produce",
+    inStock: false
+  },
+  {
+    id: 2,
+    name: "milk",
+    price: 5.99,
+    category: "dairy",
+    inStock: true
+  }
+];

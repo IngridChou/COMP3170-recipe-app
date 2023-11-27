@@ -1,35 +1,42 @@
+import { useContext } from "react";
 
-export default function Recipe(props) {
-  const recipe = props.recipe;
+import { InventoryContext } from "../data/inventoryContext";
 
-  function handleDelete() {
-    props.remove(recipe);
-  }
+export default function Recipe({ product }) {
+  const { deleteProduct, setEditing, updateProduct } = useContext(
+    InventoryContext
+  );
 
-  function handleStatusChange() {
-    props.toggleFinished(recipe);
+  function handleCheckbox() {
+    updateProduct({
+      ...product,
+      inStock: !product.inStock
+    });
   }
 
   return (
-    <li className="recipe">
-      <div className="recipe-details">
-        <p>
-          <span>
-            <input
-              type="checkbox"
-              onChange={handleStatusChange}
-              value={recipe.finished}
-            />
-            {recipe.finished === true ? <del>{recipe.title}</del> : recipe.title}
-          </span>
-        </p>
-      </div>
-      <div onClick={handleDelete}>
-        <button className="edit-btn" onClick={() => props.setEditing(recipe.id)}>
-          edit
-        </button>
-        <button>remove</button>
-      </div>
-    </li>
+    <div className="product">
+      <h3>{product.name}</h3>
+      <p>
+        <span>Price:</span> {`$${product.price}`}
+      </p>
+      <p>
+        <span>Category:</span> {product.category}
+      </p>
+      <label>
+        {product.inStock ? "In Stock" : "Not in stock"}
+        <input
+          type="checkbox"
+          checked={product.inStock}
+          onChange={handleCheckbox}
+        />
+      </label>
+      <button className="edit-btn" onClick={() => setEditing(product.id)}>
+        edit
+      </button>
+      <button className="delete-btn" onClick={() => deleteProduct(product.id)}>
+        remove
+      </button>
+    </div>
   );
 }
