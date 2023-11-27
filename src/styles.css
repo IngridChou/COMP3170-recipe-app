@@ -1,87 +1,123 @@
 .App {
   font-family: sans-serif;
   text-align: center;
-  color: #151515;
-  background: #ffb777;
-  min-height: 100vh;
+  background-color: #ffffff;
 }
 
-.recipe {
+.products {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-  margin-right: 2.5rem;
-  padding: 1rem;
-  border-radius: 1em;
-  background-color: #aabbff;
-  border: 2px solid white;
-}
-
-.recipe button {
-  border-radius: 0.5em;
-  border: 2px solid white;
-  background-color: #ffb777;
-}
-
-.recipe-details {
-  display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
-  align-items: center;
+  margin: 2rem;
 }
 
-.recipe-details p {
+.add {
+  display: inline-block;
+  background: green;
+  border: transparent;
+  padding: 10px;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 1rem;
+  align-items: flex-end;
 }
 
-.recipe-details p span:first-child {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.recipe-details p span {
+form > div {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 0.5em;
 }
 
-.recipe-details p input {
+form label {
+  flex: 1;
+  text-align: left;
+}
+
+form input,
+form select {
+  flex: 2;
+}
+
+.form-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: flex-end;
+}
+
+.product {
+  padding: 1rem;
+  text-align: left;
+  box-shadow: 0 1px 2px #aeaeae;
+}
+
+.filters {
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filters input,
+.filters select {
   margin-left: 1rem;
 }
-/* End of recipe UI styles */
 
-/* Form styles */
-
-.edit form {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.product h3 {
+  margin: 0;
+  padding: 0;
+  text-transform: capitalize;
 }
 
-.edit label {
+.product label {
   display: block;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 }
 
-.edit input {
-  height: 1.25rem;
-  border: 2.5px solid white;
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+form button,
+.add-btn {
+  border: transparent;
+  border-radius: 2px;
+  padding: 5px;
+  color: #fff;
+  font-size: 1.2rem;
 }
 
-.edit button {
-  height: 1.7rem;
-  background-color: rgb(0, 0, 0);
-  color: white;
-  border: 1px solid black;
-  border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+.product button {
+  display: inline-block;
+  color: #fff;
+  border: transparent;
+  border-radius: 2px;
+  padding: 5px;
+  margin: 5px;
 }
-/* End of form styles */
+
+.cancel-btn,
+.delete-btn {
+  background: red;
+}
+
+.save-btn {
+  background: green;
+}
+
+.edit-btn {
+  background: #555;
+}
+
+.product p,
+option {
+  text-transform: capitalize;
+}
+
+.product span {
+  font-weight: bold;
+}
