@@ -24,7 +24,7 @@ export default function App() {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${API_KEY}&number=10&page=${page}`
+        `https://api.spoonacular.com/recipes/random?apiKey=${API_KEY}&number=10&page=${page}`,
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -57,7 +57,7 @@ export default function App() {
 
   function updateRecipe(updatedRecipe) {
     const newRecipes = recipes.map((recipe) =>
-      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe,
     );
     setRecipes(newRecipes);
     localStorage.setItem("recipes", JSON.stringify(newRecipes));
@@ -100,14 +100,16 @@ export default function App() {
               >
                 Add New Recipe
               </Button>
-              <RecipeList />
-              <Button
-                className="load-more-btn"
-                onClick={loadMoreRecipes}
-                disabled={loading}
-              >
-                {loading ? "Loading..." : "Load More"}
-              </Button>
+              <div className="cards">
+                <RecipeList />
+                <Button
+                  className="load-more-btn"
+                  onClick={loadMoreRecipes}
+                  disabled={loading}
+                >
+                  {loading ? "Loading..." : "Load More"}
+                </Button>
+              </div>
             </>
           ) : (
             <RecipeForm />

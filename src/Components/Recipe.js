@@ -16,9 +16,8 @@ import {
 } from "@chakra-ui/react";
 
 export default function Recipe({ recipe }) {
-  const { deleteRecipe, setEditing, updateRecipe } = useContext(
-    InventoryContext
-  );
+  const { deleteRecipe, setEditing, updateRecipe } =
+    useContext(InventoryContext);
 
   return (
     <Card maxW="sm">
@@ -32,7 +31,8 @@ export default function Recipe({ recipe }) {
         <Stack mt="6" spacing="3">
           <Heading size="md">{recipe.title}</Heading>
           <Text>
-            <span>Type:</span> {recipe.type || (recipe.dishTypes && recipe.dishTypes[0]) || 'N/A'}
+            <span>Type:</span>{" "}
+            {recipe.type || (recipe.dishTypes && recipe.dishTypes[0]) || "N/A"}
           </Text>
           <Text>
             <span>Cuisine:</span>{" "}
@@ -46,6 +46,7 @@ export default function Recipe({ recipe }) {
           {/* Add more details based on the Spoonacular API response */}
         </Stack>
       </CardBody>
+
       <Divider />
       <CardFooter>
         <ButtonGroup spacing="2">
