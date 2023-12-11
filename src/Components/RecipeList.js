@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import Recipe from "./Recipe";
 import { InventoryContext } from "../data/inventoryContext";
-import { Select } from "@chakra-ui/react";
+import { Select, Box } from "@chakra-ui/react";
 
 export default function RecipeList() {
   const { recipes } = useContext(InventoryContext);
@@ -11,7 +11,7 @@ export default function RecipeList() {
   console.log("Recipes in RecipeList:", recipes); // Add this line
 
   return (
-    <>
+    <Box bgGradient='linear(red.100 0%, orange.100 25%, yellow.100 50%)' borderRadius='20' pt='10' pb='5'>
       <div className="filters">
         <label>
           Filters:
@@ -45,6 +45,6 @@ export default function RecipeList() {
           <Recipe key={recipe.id} recipe={recipe} />
         ))}
       </div>
-    </>
+    </Box>
   );
 }
