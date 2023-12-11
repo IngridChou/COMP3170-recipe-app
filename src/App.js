@@ -9,7 +9,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Heading, Button } from "@chakra-ui/react";
 import { InventoryContext } from "./data/inventoryContext";
 
-const API_KEY = "6f9cb552d1b843288f6ebeb76688a49d"; // Use the provided Spoonacular API key
+const API_KEY = "e20a584ca9c147a99ad3663dc5ffcf6b"; // Use the provided Spoonacular API key
 
 export default function App() {
   const [recipes, setRecipes] = useState(() => {
@@ -43,7 +43,13 @@ export default function App() {
   }
 
   useEffect(() => {
-    if (recipes.length === 0 || page > 1) {
+    if (page === 1 && recipes.length === 0) {
+      // Reset the state and fetch fresh data when the component mounts
+      setRecipes([]);
+      setLoading(true);
+      fetchRecipeData();
+    } else if (recipes.length === 0 || page > 1) {
+      // Fetch additional data when the page changes or recipes are empty
       fetchRecipeData();
     }
   }, [page, recipes]);
