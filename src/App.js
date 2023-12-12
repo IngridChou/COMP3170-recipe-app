@@ -5,11 +5,12 @@ import "./styles.css";
 import Recipe from "./Components/Recipe";
 import RecipeForm from "./Components/RecipeForm";
 import RecipeList from "./Components/RecipeList";
+import AddRecipeForm from "./Components/AddRecipeForm"; // Import the new component
 import { ChakraProvider } from "@chakra-ui/react";
 import { Heading, Button } from "@chakra-ui/react";
 import { InventoryContext } from "./data/inventoryContext";
 
-const API_KEY = "730c494fdc83459ca37442b1a13cb36a"; // Use the provided Spoonacular API key
+const API_KEY = "730c494fdc83459ca37442b1a13cb36a";
 
 export default function App() {
   const [recipes, setRecipes] = useState(() => {
@@ -36,7 +37,7 @@ export default function App() {
           id: recipe.id || String(Math.random()),
         }));
         setRecipes((prevRecipes) => [...prevRecipes, ...newRecipes]);
-        setPage((prevPage) => prevPage + 1); // Update the page state
+        setPage((prevPage) => prevPage + 1);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -94,8 +95,10 @@ export default function App() {
               <Button
                 className="save-btn add-btn"
                 onClick={() => setEditing("new")}
+                colorScheme="black"
+                variant="outline"
               >
-                Add New Recipe
+                + Add New Recipe +
               </Button>
               <RecipeList />
               <Button
@@ -107,7 +110,11 @@ export default function App() {
               </Button>
             </>
           ) : (
-            <RecipeForm />
+            editing === "new" ? (
+              <AddRecipeForm />
+            ) : (
+              <RecipeForm />
+            )
           )}
         </InventoryContext.Provider>
       </div>
