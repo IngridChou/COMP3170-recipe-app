@@ -1,20 +1,21 @@
+// RecipeForm.js
+
 import { useContext, useState } from "react";
 import { nanoid } from "nanoid";
 import { InventoryContext } from "../data/inventoryContext";
-import { Select, Button } from "@chakra-ui/react";
+import { Input, Button } from "@chakra-ui/react";
 
 export default function RecipeForm() {
-  const {
-    addRecipe,
-    setEditing,
-    updateRecipe,
-    editing,
-    recipes,
-  } = useContext(InventoryContext);
+  const { addRecipe, setEditing, updateRecipe, editing, recipes } = useContext(
+    InventoryContext
+  );
 
   let initialData = {
     title: "",
-    dishType: "",
+    dishTypes: "",
+    cuisines: "",
+    servings: "",
+    readyInMinutes: "",
     image: "",
   };
 
@@ -35,6 +36,19 @@ export default function RecipeForm() {
     } else {
       updateRecipe(recipe);
     }
+
+    // Clear the form after submission
+    setRecipe({
+      title: "",
+      dishTypes: "",
+      cuisines: "",
+      servings: "",
+      readyInMinutes: "",
+      image: "",
+    });
+
+    // Exit editing mode
+    setEditing(null);
   }
 
   function handleInput(e, field) {
@@ -46,7 +60,7 @@ export default function RecipeForm() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title:</label>
-          <input
+          <Input
             type="text"
             value={recipe.title}
             onChange={(e) => handleInput(e, "title")}
@@ -54,15 +68,39 @@ export default function RecipeForm() {
         </div>
         <div>
           <label>Dish Type:</label>
-          <input
+          <Input
             type="text"
-            value={recipe.dishType}
+            value={recipe.dishTypes}
             onChange={(e) => handleInput(e, "dishType")}
           />
         </div>
         <div>
+          <label>Cuisine:</label>
+          <Input
+            type="text"
+            value={recipe.cuisines}
+            onChange={(e) => handleInput(e, "cuisine")}
+          />
+        </div>
+        <div>
+          <label>Servings:</label>
+          <Input
+            type="text"
+            value={recipe.servings}
+            onChange={(e) => handleInput(e, "servings")}
+          />
+        </div>
+        <div>
+          <label>Ready in (minutes):</label>
+          <Input
+            type="text"
+            value={recipe.readyInMinutes}
+            onChange={(e) => handleInput(e, "readyInMinutes")}
+          />
+        </div>
+        <div>
           <label>Image URL:</label>
-          <input
+          <Input
             type="text"
             value={recipe.image}
             onChange={(e) => handleInput(e, "image")}
@@ -84,3 +122,4 @@ export default function RecipeForm() {
     </div>
   );
 }
+

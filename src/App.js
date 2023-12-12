@@ -1,6 +1,6 @@
 // App.js
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import Recipe from "./Components/Recipe";
 import RecipeForm from "./Components/RecipeForm";
@@ -9,7 +9,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Heading, Button } from "@chakra-ui/react";
 import { InventoryContext } from "./data/inventoryContext";
 
-const API_KEY = "e20a584ca9c147a99ad3663dc5ffcf6b"; // Use the provided Spoonacular API key
+const API_KEY = "730c494fdc83459ca37442b1a13cb36a"; // Use the provided Spoonacular API key
 
 export default function App() {
   const [recipes, setRecipes] = useState(() => {
@@ -20,36 +20,31 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(null);
 
-  async function fetchRecipeData() {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${API_KEY}&number=10&page=${page}`,
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      const newRecipes = data.recipes.map((recipe) => ({
-        ...recipe,
-        id: recipe.id || String(Math.random()), // Fallback to random string if 'id' is missing
-      }));
-      setRecipes((prevRecipes) => [...prevRecipes, ...newRecipes]);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    if (page === 1 && recipes.length === 0) {
-      // Reset the state and fetch fresh data when the component mounts
-      setRecipes([]);
-      setLoading(true);
-      fetchRecipeData();
-    } else if (recipes.length === 0 || page > 1) {
-      // Fetch additional data when the page changes or recipes are empty
+    async function fetchRecipeData() {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://api.spoonacular.com/recipes/random?apiKey=${API_KEY}&number=8&page=${page}`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const newRecipes = data.recipes.map((recipe) => ({
+          ...recipe,
+          id: recipe.id || String(Math.random()),
+        }));
+        setRecipes((prevRecipes) => [...prevRecipes, ...newRecipes]);
+        setPage((prevPage) => prevPage + 1); // Update the page state
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    }
+
+    if (recipes.length === 0 || page > 1) {
       fetchRecipeData();
     }
   }, [page, recipes]);
@@ -63,7 +58,7 @@ export default function App() {
 
   function updateRecipe(updatedRecipe) {
     const newRecipes = recipes.map((recipe) =>
-      recipe.id === updatedRecipe.id ? updatedRecipe : recipe,
+      recipe.id === updatedRecipe.id ? updatedRecipe : recipe
     );
     setRecipes(newRecipes);
     localStorage.setItem("recipes", JSON.stringify(newRecipes));
@@ -85,11 +80,7 @@ export default function App() {
       <div className="App">
         <InventoryContext.Provider
           value={{
-            recipes: recipes.slice().sort((a, b) => {
-              const idA = String(a.id).toLowerCase();
-              const idB = String(b.id).toLowerCase();
-              return idA.localeCompare(idB);
-            }),
+            recipes,
             addRecipe,
             deleteRecipe,
             updateRecipe,
@@ -106,16 +97,14 @@ export default function App() {
               >
                 Add New Recipe
               </Button>
-              <div className="cards">
-                <RecipeList />
-                <Button
-                  className="load-more-btn"
-                  onClick={loadMoreRecipes}
-                  disabled={loading}
-                >
-                  {loading ? "Loading..." : "Load More"}
-                </Button>
-              </div>
+              <RecipeList />
+              <Button
+                className="load-more-btn"
+                onClick={loadMoreRecipes}
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Load More"}
+              </Button>
             </>
           ) : (
             <RecipeForm />
