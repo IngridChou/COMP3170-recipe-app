@@ -10,7 +10,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Heading, Button } from "@chakra-ui/react";
 import { InventoryContext } from "./data/inventoryContext";
 
-const API_KEY = "730c494fdc83459ca37442b1a13cb36a";
+const API_KEY = "22d03274ed3d4424a154731f11db899a";
 
 export default function App() {
   const [recipes, setRecipes] = useState(() => {
@@ -89,7 +89,7 @@ export default function App() {
             editing,
           }}
         >
-          <Heading m="10">Recipes</Heading>
+          <Heading m="20">Recipes App</Heading>
           {!editing ? (
             <>
               <Button
